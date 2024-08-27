@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jeu de le Poulet</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            background: linear-gradient(135deg, #f0f0f0, #d9d9d9);
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            max-width: 400px;
+            width: 90%;
+            transition: transform 0.3s ease;
+        }
+
+        .container:hover {
+            transform: scale(1.05);
+        }
+
+        h1 {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .chicken {
+            width: 200px;
+            height: 200px;
+            background-image: url('https://i0.wp.com/www.poulesenville.com/wp-content/uploads/2020/04/img-0549.jpeg?fit=1200%2C900&ssl=1');
+            background-size: cover;
+            background-position: center;
+            margin: 20px auto;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .chicken:hover {
+            transform: rotate(10deg) scale(1.1);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        #message {
+            font-size: 20px;
+            color: #e74c3c;
+            font-weight: bold;
+            margin-top: 20px;
+            transition: opacity 0.3s ease;
+        }
+
+        audio {
+            display: none;
+        }
+
+        .button {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: #fff;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background-color: #2980b9;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Ne regarde pas le poulet !</h1>
+        <div id="chicken" class="chicken"></div>
+        <p id="message"></p>
+        <audio id="win-sound" src="https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3"></audio>
+        <audio id="lose-sound" src="https://www.soundjay.com/button/sounds/beep-10.mp3"></audio>
+        <button id="restart" class="button" style="display:none;">Recommencer</button>
+    </div>
+
+    <script>
+        const chicken = document.getElementById('chicken');
+        const message = document.getElementById('message');
+        const winSound = document.getElementById('win-sound');
+        const loseSound = document.getElementById('lose-sound');
+        const restartButton = document.getElementById('restart');
+
+        chicken.addEventListener('click', () => {
+            const userResponse = confirm("As-tu gagné ? (Cliquez sur OK pour Oui ou Annuler pour Non)");
+
+            if (userResponse) {
+                message.textContent = "Gagné ! Bravo !";
+                message.style.color = "#2ecc71"; // Vert pour gagnant
+                winSound.play();
+            } else {
+                message.textContent = "Perdu ! Tu as regardé le poulet.";
+                message.style.color = "#e74c3c"; // Rouge pour perdu
+                loseSound.play();
+            }
+            message.style.opacity = 1;
+            chicken.style.display = 'none'; // Cacher le poulet après la réponse
+            restartButton.style.display = 'inline-block'; // Afficher le bouton recommencer
+        });
+
+        restartButton.addEventListener('click', () => {
+            chicken.style.display = 'block';
+            message.textContent = '';
+            restartButton.style.display = 'none';
+        });
+    </script>
+</body>
+
+</html>
+
